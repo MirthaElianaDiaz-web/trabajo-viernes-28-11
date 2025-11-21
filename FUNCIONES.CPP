@@ -15,11 +15,13 @@ void mostrarmenu(int opcion)
     cout<< "0_Salir"<<endl;
     cin>> opcion;
     }
+
 void elegiropcion(int opcion)
 {
     switch(opcion)
     {
     case 1:
+
          system("cls");
          cout<<"Usted está en la carga de Marcas"<<endl<<endl;
 
@@ -38,8 +40,7 @@ void elegiropcion(int opcion)
     case 2:
          system("cls");
           cout<<"Usted està en la carga de Productos"<<endl<<endl;
-
-        cargarLoteProd(Productos, 20);
+        cargarLoteProd (Productos, 20);
 
         cout<< "Datos de los productos" << endl<<endl;
 
@@ -85,10 +86,11 @@ void elegiropcion(int opcion)
 
     }
 
-   //FUNCIONES INDIVIDUALES DESDE4 ACA//
+   //FUNCIONES INDIVIDUALES DESDE ACA//
 
-void cargarLoteMarca(MARCA Marca[], int codmarca, string nombre)
-       {int aux, i;
+bool cargarLoteMarca(MARCA Marca[], int codmarca, string nombre)
+       {
+        int aux, i;
         for (i = 0; i < 10; i++)
         {
         cout << "Ingrese el código de la marca: ";
@@ -99,10 +101,13 @@ void cargarLoteMarca(MARCA Marca[], int codmarca, string nombre)
         cout << "Ingrese el nombre de la marca: ";
         getline (cin, nombre);
         Marca[aux].nombre=nombre;
-        }}
+        }
+        return true;
+        }
 
-void cargarLoteProd(PRODUCTOS Productos [], int codprod, int stock, int codmarcaprod, std::string nombreprod, float preventa, float precompra)
-        {int i;
+bool cargarLoteProd(PRODUCTOS Productos [], int codprod, int stock, int codmarcaprod, std::string nombreprod, float preventa, float precompra)
+        {
+        int i;
         for (i = 0; i < 20; i++)
         {
         cout << "Ingrese el código del producto: ";
@@ -124,11 +129,14 @@ void cargarLoteProd(PRODUCTOS Productos [], int codprod, int stock, int codmarca
         cout << "Ingrese el codigo de marca: ";
         cin >> codmarcaprod;
         Productos[i].codMarca=codmarcaprod;
-        }}
+        }
+        return true;
+        }
 
-        cargarLoteFP(vFormapago, 5)
+bool cargarLoteFP( FORMAPAGO FormaPago[], int tam)
         {
-        int i;
+        int i, porcentajes;
+        std::string nombrepago, codpago;
         for (i = 0; i < 5; i++)
         {
         cout << "Ingrese el código de la forma de pago: ";
@@ -138,6 +146,8 @@ void cargarLoteProd(PRODUCTOS Productos [], int codprod, int stock, int codmarca
         cin>>nombrepago;
         FormaPago[i].nombreFP=nombrepago;
         cout << "Ingrese el porcentaje de descuento (número negativo) o interés (número positiv;o) ";
-        cin >> porcentaje;
-        FormaPago[i].porcentaje=porcentaje;
-        }}
+        cin >> porcentajes;
+        FormaPago[i].porcentaje=porcentajes;
+        }
+        return true;
+        }
