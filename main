@@ -1,0 +1,22 @@
+# trabajo-viernes-28-11
+#include <iostream>
+#include"FUNCIONES.h"
+using namespace std;
+
+
+
+int main(){
+{
+struct MARCA Marca[10];
+struct PRODUCTOS Productos[20];
+struct FORMAPAGO Formapago[5];
+int opcion;
+
+mostrarmenu(opcion);
+
+elegiropcion(opcion);
+
+}
+    return 0;
+}
+
