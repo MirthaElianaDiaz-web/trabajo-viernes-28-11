@@ -4,6 +4,10 @@
 #include<vector>
 using namespace std;
 
+struct MARCA Marca[10];
+struct PRODUCTOS Productos[20];
+struct FORMAPAGO Formapago[5];
+
 void mostrarmenu(int opcion)
     {
     cout<< "ELEGIR UNA OPCION"<<endl<<endl;
@@ -21,24 +25,26 @@ void elegiropcion(int opcion)
     switch(opcion)
     {
     case 1:
-
-         system("cls");
-         cout<<"Usted está en la carga de Marcas"<<endl<<endl;
-
-        cargarLoteMarca(Marca, 10);
+{
+        system("cls");
+        cout<<"Usted está en la carga de Marcas"<<endl<<endl;
+        MARCA Marca[10];
+        cargarLoteMarca(Marca, int tam);
 
         cout<< "Datos de las marcas" << endl<<endl;
 
-    for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 10; i++)
         {
         cout<<Marca[i].codMarca << " ---- ";
         cout<<Marca[i].nombre<< endl<<endl;
         }
 
     break;
-
+}
     case 2:
-         system("cls");
+     {
+
+        system("cls");
           cout<<"Usted està en la carga de Productos"<<endl<<endl;
         cargarLoteProd (Productos, 20);
 
@@ -54,37 +60,44 @@ void elegiropcion(int opcion)
         cout<<Productos[i].codMarca<<endl;
         }
     break;
-
+     }
     case 3:
-        system("cls");
+        {system("cls");
         cout<<"Usted està en la carga de Formas de Pago"<<endl<<endl;
 
-        cargarLoteFP (FormaPago, 5);
+        cargarLoteFP (Formapago, 5);
 
     break;
-
+        }
     case 4:
-         system("cls");
+        {
+
+        system("cls");
           cout<<"Carga de Compras:"<<endl<<endl;
     break;
-
+        }
     case 5:
+       {
+
          system("cls");
           cout<<"Seleccione un informe:"<<endl<<endl;
     break;
+       }
     case 6:
-         system("cls");
+        {
+
+        system("cls");
           cout<<"Salir"<<endl<<endl;
     break;
-
+        }
     default:
-         system("cls");
+    {     system("cls");
           cout << "Por favor, vuelva a elegir" << endl << endl;
 
     break;
     }
 
-    }
+    }}
 
    //FUNCIONES INDIVIDUALES DESDE ACA//
 
@@ -105,9 +118,11 @@ bool cargarLoteMarca(MARCA Marca[], int codmarca, string nombre)
         return true;
         }
 
-bool cargarLoteProd(PRODUCTOS Productos [], int codprod, int stock, int codmarcaprod, std::string nombreprod, float preventa, float precompra)
+bool cargarLoteProd(PRODUCTOS Productos [], int tam)
         {
-        int i;
+        int i, stock, codmarca, codprod;
+        float preventa, precompra;
+        std:: string nombreprod;
         for (i = 0; i < 20; i++)
         {
         cout << "Ingrese el código del producto: ";
@@ -127,8 +142,8 @@ bool cargarLoteProd(PRODUCTOS Productos [], int codprod, int stock, int codmarca
         cin >> stock;
         Productos[i].stock=stock;
         cout << "Ingrese el codigo de marca: ";
-        cin >> codmarcaprod;
-        Productos[i].codMarca=codmarcaprod;
+        cin >> codmarca;
+        Productos[i].codMarca=codmarca;
         }
         return true;
         }
