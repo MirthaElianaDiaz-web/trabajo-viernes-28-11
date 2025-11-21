@@ -34,7 +34,7 @@ std::string codPago;
 std::string nombreFP;
 int porcentaje;
 };
-FORMAPAGO FormaPago[5];
+
 //carga de lotes
 bool cargarLoteMarca(MARCA Marca[], int tam);
 bool cargarLoteProd(PRODUCTOS Productos[], int tam);
@@ -42,3 +42,4 @@ bool cargarLoteFP(FORMAPAGO FormaPago[], int tam);
 
 
 #endif // FUNCIONES_H_INCLUDED
+
