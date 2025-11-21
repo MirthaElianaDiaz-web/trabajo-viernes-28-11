@@ -8,8 +8,9 @@ struct MARCA Marca[10];
 struct PRODUCTOS Productos[20];
 struct FORMAPAGO Formapago[5];
 
-void mostrarmenu(int opcion)
+int mostrarmenu()
     {
+        int opcion;
     cout<< "ELEGIR UNA OPCION"<<endl<<endl;
     cout<< "1_Cargar lote de marcas."<<endl;
     cout<< "2_Cargar lote de productos."<<endl;
@@ -18,6 +19,8 @@ void mostrarmenu(int opcion)
     cout<< "5_Mostrar reportes."<<endl;
     cout<< "0_Salir"<<endl;
     cin>> opcion;
+
+    return opcion;
     }
 
 void elegiropcion(int opcion)
@@ -28,8 +31,10 @@ void elegiropcion(int opcion)
 {
         system("cls");
         cout<<"Usted está en la carga de Marcas"<<endl<<endl;
-        MARCA Marca[10];
-        cargarLoteMarca(Marca, int tam);
+
+        int tam = 10;
+        cargarLoteMarca(Marca, tam);
+
 
         cout<< "Datos de las marcas" << endl<<endl;
 
@@ -101,9 +106,10 @@ void elegiropcion(int opcion)
 
    //FUNCIONES INDIVIDUALES DESDE ACA//
 
-bool cargarLoteMarca(MARCA Marca[], int codmarca, string nombre)
+bool cargarLoteMarca(MARCA Marca[], int tam)
        {
-        int aux, i;
+        int aux, i, codmarca;
+        std:: string nombre;
         for (i = 0; i < 10; i++)
         {
         cout << "Ingrese el código de la marca: ";
