@@ -14,7 +14,6 @@ struct MARCA
 int codMarca;
 std::string nombre;
 };
-MARCA Marca[10];
 
 
 
@@ -27,7 +26,7 @@ float preCompra;
 int stock;
 int codMarca;
 };
-PRODUCTOS Productos[20];
+
 
 struct FORMAPAGO
 {
@@ -36,11 +35,10 @@ std::string nombreFP;
 int porcentaje;
 };
 FORMAPAGO FormaPago[5];
+//carga de lotes
+bool cargarLoteMarca(MARCA Marca[], int tam);
+bool cargarLoteProd(PRODUCTOS Productos[], int tam);
+bool cargarLoteFP(FORMAPAGO FormaPago[], int tam);
 
-void cargarLoteMarca(MARCA Marca[], int tam);
-void cargarLoteProd(PRODUCTOS Productos[],int codprod, int stock, int codmarcaprod, std::string nombreprod, float preventa, float precompra, int tam);
-void cargarLoteFP(FORMAPAGO FormaPago[], int tam);
-void mostrarLoteProd(PRODUCTOS Productos[], int tam);
-void mostrarLoteFP(FORMAPAGO FormaPago[], int tam);
 
 #endif // FUNCIONES_H_INCLUDED
