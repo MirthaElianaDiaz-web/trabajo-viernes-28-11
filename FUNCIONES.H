@@ -4,7 +4,7 @@
 #include <string>
 
 
-void mostrarmenu (int opcion);
+int mostrarmenu ();
 void elegiropcion (int opcion);
 
 
@@ -42,4 +42,3 @@ bool cargarLoteFP(FORMAPAGO FormaPago[], int tam);
 
 
 #endif // FUNCIONES_H_INCLUDED
-
