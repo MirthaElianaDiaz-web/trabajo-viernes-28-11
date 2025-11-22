@@ -2,14 +2,15 @@
 #include"FUNCIONES.h"
 using namespace std;
 
+int main() {
+    bool salir = false;
+    int opcion;
 
+    do {
+        opcion = mostrarmenu();
+        elegiropcion(opcion, salir);
+    } while (!salir);
 
-int main(){
-{
-int opcion=mostrarmenu();
-
-elegiropcion(opcion);
-
-}
     return 0;
 }
+
