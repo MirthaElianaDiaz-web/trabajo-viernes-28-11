@@ -3,19 +3,15 @@
 
 #include <string>
 
-
+void IniciarMenu();
 int mostrarmenu ();
-void elegiropcion (int opcion);
-
-
+void elegiropcion(int opcion, bool &salir);
 
 struct MARCA
 {
 int codMarca;
 std::string nombre;
 };
-
-
 
 struct PRODUCTOS
 {
@@ -26,7 +22,6 @@ float preCompra;
 int stock;
 int codMarca;
 };
-
 
 struct FORMAPAGO
 {
@@ -40,5 +35,11 @@ bool cargarLoteMarca(MARCA Marca[], int tam);
 bool cargarLoteProd(PRODUCTOS Productos[], int tam);
 bool cargarLoteFP(FORMAPAGO FormaPago[], int tam);
 
+//validaciones
+std::string validarDistintosFP();
+int validarCero(int codmarca);
+int validaCodMarca(int codmarca);
+std:: string validaString(std:: string nombre);
 
 #endif // FUNCIONES_H_INCLUDED
+
