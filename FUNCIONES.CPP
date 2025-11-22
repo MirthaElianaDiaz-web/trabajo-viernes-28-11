@@ -11,6 +11,7 @@ struct FORMAPAGO Formapago[5];
 int mostrarmenu()
     {
         int opcion;
+        system("cls");
     cout<< "ELEGIR UNA OPCION"<<endl<<endl;
     cout<< "1_Cargar lote de marcas."<<endl;
     cout<< "2_Cargar lote de productos."<<endl;
@@ -23,39 +24,42 @@ int mostrarmenu()
     return opcion;
     }
 
-void elegiropcion(int opcion)
-{
+void elegiropcion(int opcion, bool &salir)
+    {
     switch(opcion)
     {
     case 1:
-{
+    {
         system("cls");
-        cout<<"Usted está en la carga de Marcas"<<endl<<endl;
+        cout<<"Usted esta en la carga de Marcas"<<endl<<endl;
 
         int tam = 10;
         cargarLoteMarca(Marca, tam);
-
-
+        system("cls");
         cout<< "Datos de las marcas" << endl<<endl;
 
         for(int i = 0; i < 10; i++)
         {
         cout<<Marca[i].codMarca << " ---- ";
-        cout<<Marca[i].nombre<< endl<<endl;
-        }
+        cout<<Marca[i].nombre<<endl;
 
-    break;
-}
+        system("pause");
+        }
+        break;
+    }
+
     case 2:
      {
 
         system("cls");
-          cout<<"Usted està en la carga de Productos"<<endl<<endl;
-        cargarLoteProd (Productos, 20);
+        cout<<"Usted està en la carga de Productos"<<endl<<endl;
+
+        int tam=20;
+        cargarLoteProd (Productos, tam);
 
         cout<< "Datos de los productos" << endl<<endl;
 
-    for(int i = 0; i < 20; i++)
+        for(int i = 0; i < 20; i++)
         {
         cout<<Productos[i].codProd << " ---- ";
         cout<<Productos[i].nombreProd<<endl;
@@ -63,17 +67,29 @@ void elegiropcion(int opcion)
         cout<<Productos[i].preCompra<<endl;
         cout<<Productos[i].stock<<endl;
         cout<<Productos[i].codMarca<<endl;
+
+        system("pause");
         }
     break;
-     }
+        }
+
     case 3:
         {system("cls");
         cout<<"Usted està en la carga de Formas de Pago"<<endl<<endl;
+        int tam=5;
+        cargarLoteFP (Formapago, tam);
 
-        cargarLoteFP (Formapago, 5);
+        for(int i = 0; i < 5; i++)
+        {
+        cout<<Formapago[i].codPago<<" ---- "<<endl;
+        cout<<Formapago[i].nombreFP<<endl;
+        cout<<Formapago[i].porcentaje<<endl;
 
+        system("pause");
+        }
     break;
         }
+
     case 4:
         {
 
@@ -81,6 +97,7 @@ void elegiropcion(int opcion)
           cout<<"Carga de Compras:"<<endl<<endl;
     break;
         }
+
     case 5:
        {
 
@@ -88,13 +105,16 @@ void elegiropcion(int opcion)
           cout<<"Seleccione un informe:"<<endl<<endl;
     break;
        }
-    case 6:
-        {
 
+   case 0:
+        {
         system("cls");
           cout<<"Salir"<<endl<<endl;
+
+          salir=true;
     break;
         }
+
     default:
     {     system("cls");
           cout << "Por favor, vuelva a elegir" << endl << endl;
@@ -104,6 +124,17 @@ void elegiropcion(int opcion)
 
     }}
 
+void IniciarMenu()
+    {
+    bool salir = false;
+    while (salir!= true)
+    {
+    int opcion = mostrarmenu();
+    elegiropcion(opcion, salir);
+    }
+    }
+
+
    //FUNCIONES INDIVIDUALES DESDE ACA//
 
 bool cargarLoteMarca(MARCA Marca[], int tam)
@@ -112,14 +143,16 @@ bool cargarLoteMarca(MARCA Marca[], int tam)
         std:: string nombre;
         for (i = 0; i < 10; i++)
         {
-        cout << "Ingrese el código de la marca: ";
+        cout << "Ingrese el codigo de la marca: ";
         cin >> codmarca;
-        aux=codmarca;
-        Marca[aux].codMarca=codmarca;
-        cin.ignore();
+        codmarca = validarCero(codmarca);
+        codmarca = validaCodMarca(codmarca);
+        Marca[i].codMarca=codmarca;
+        cin.ignore(100, '\n');
         cout << "Ingrese el nombre de la marca: ";
         getline (cin, nombre);
-        Marca[aux].nombre=nombre;
+        nombre= validaString(nombre);
+        Marca[i].nombre=nombre;
         }
         return true;
         }
@@ -131,12 +164,12 @@ bool cargarLoteProd(PRODUCTOS Productos [], int tam)
         std:: string nombreprod;
         for (i = 0; i < 20; i++)
         {
-        cout << "Ingrese el código del producto: ";
+        cout << "Ingrese el codigo del producto: ";
         cin >>codprod;
         Productos[i].codProd=codprod;
         cin.ignore();
         cout << "Ingrese el nombre del producto: ";
-        cin>>nombreprod;
+        getline(cin, nombreprod);
         Productos[i].nombreProd=nombreprod;
         cout << "Ingrese el precio de venta del producto: ";
         cin >> preventa;
@@ -154,21 +187,90 @@ bool cargarLoteProd(PRODUCTOS Productos [], int tam)
         return true;
         }
 
-bool cargarLoteFP( FORMAPAGO FormaPago[], int tam)
-        {
-        int i, porcentajes;
+
+bool cargarLoteFP(FORMAPAGO FormaPago[], int tam) {
+        int porcentajes;
         std::string nombrepago, codpago;
-        for (i = 0; i < 5; i++)
-        {
-        cout << "Ingrese el código de la forma de pago: ";
+        for (int i = 0; i < tam; i++) {
+        cout << "Ingrese el codigo de la forma de pago: " << endl;
+        getline(cin, codpago);
+        while (!(codpago=="EF" || codpago=="MP" || codpago=="TR" || codpago=="TC" || codpago=="CT")) {
+        cout << "Código inválido, ingreselo nuevamente: ";
         cin >> codpago;
-        FormaPago[i].codPago=codpago;
-        cout << "Ingrese el nombre de la forma de pago ";
-        cin>>nombrepago;
-        FormaPago[i].nombreFP=nombrepago;
-        cout << "Ingrese el porcentaje de descuento (número negativo) o interés (número positiv;o) ";
+        cin.ignore(100, '\n');
+        }
+        FormaPago[i].codPago = codpago;
+        cout << "Ingrese el nombre de la forma de pago: " << endl;
+        getline(cin, nombrepago);
+        FormaPago[i].nombreFP = nombrepago;
+        cout << "Ingrese el porcentaje de descuento (numero negativo) o interes (numero positivo): " << endl;
         cin >> porcentajes;
-        FormaPago[i].porcentaje=porcentajes;
-        }
+        FormaPago[i].porcentaje = porcentajes;
+        cin.ignore(100, '\n');
+                                    }
         return true;
+}
+
+int validarCero(int codmarca)
+{
+        while (codmarca==0){
+        cout<<"El valor ingresado no es valido, intentelo nuevamente"<< endl;
+        cin>>codmarca;
+                        }
+        return codmarca;
+}
+
+int validaCodMarca(int codmarca)
+{
+        while (codmarca<1 || codmarca>10){
+        cout<<"El valor ingresado no es válido, intentelo nuevamente"<< endl;
+        cin>>codmarca;
+                                    }
+        return codmarca;
+}
+
+//validaString
+string validaString(string nombre)
+{
+        cin.ignore();
+
+        while (nombre==""){
+        cout<<"El valor ingresado no es válido, intentelo nuevamente"<< endl;
+        getline(cin,nombre);
+                        }
+        return nombre;
+}
+
+//validaCodMarcaIngresado
+int validaCodMarcaIngresado(int cod, MARCA Marca[], int tamProd, int tamMarcas)
+{
+        int i = 0;
+        while (true){
+        for (i = 0; i<tamMarcas; i++) {
+        if (cod==Marca[i].codMarca)
+            {
+        return cod;
+            }
+                                        }
+        cout << "Código de marca no encontrado en el lote de marcas. Ingreselo nuevamente: ";
+        cin >> cod;
+                    }
+}
+
+//repetidosFP
+string repetidosFP(string FP, FORMAPAGO vFormaPago[], int tamFP)
+{
+        while(true){
+
+        for(int i = 0; i < tamFP; i++){
+        if (FP == vFormaPago[i].codPago){
+        cout << "Código de forma de pago ya guardado. Ingreselo nuevamente: ";
+        cin >> FP;
+        i = -1; // es importante para reiniciar el for
+                                        }
         }
+        //si no se repitió ningun codFP:
+        return FP;
+                    }
+}
+
