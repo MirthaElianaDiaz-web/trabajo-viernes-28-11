@@ -12,6 +12,8 @@ int mostrarmenu()
     {
         int opcion;
         system("cls");
+    cout<< "UTN. FRGP"<<endl;
+    cout<< "TECNICATURA UNIVERSITARIA EN PROGRAMACION"<<endl<<endl;
     cout<< "ELEGIR UNA OPCION"<<endl<<endl;
     cout<< "1_Cargar lote de marcas."<<endl;
     cout<< "2_Cargar lote de productos."<<endl;
@@ -145,7 +147,7 @@ bool cargarLoteMarca(MARCA Marca[], int tam)
         {
         cout << "Ingrese el codigo de la marca: ";
         cin >> codmarca;
-        codmarca = validarCero(codmarca);
+        codmarca = validarCeroMarca(codmarca);
         codmarca = validaCodMarca(codmarca);
         Marca[i].codMarca=codmarca;
         cin.ignore(100, '\n');
@@ -166,6 +168,7 @@ bool cargarLoteProd(PRODUCTOS Productos [], int tam)
         {
         cout << "Ingrese el codigo del producto: ";
         cin >>codprod;
+        codprod= validarCeroProducto(codprod);
         Productos[i].codProd=codprod;
         cin.ignore();
         cout << "Ingrese el nombre del producto: ";
@@ -173,15 +176,20 @@ bool cargarLoteProd(PRODUCTOS Productos [], int tam)
         Productos[i].nombreProd=nombreprod;
         cout << "Ingrese el precio de venta del producto: ";
         cin >> preventa;
+        preventa= validarCeroProducto(preventa);
         Productos[i].preVenta=preventa;
         cout << "Ingrese el precio de compra del producto: ";
         cin >> precompra;
+        precompra= validarCeroProducto(precompra);
         Productos[i].preCompra=precompra;
         cout << "Ingrese el stock del producto: ";
         cin >> stock;
+        stock= validarCeroProducto(stock);
         Productos[i].stock=stock;
         cout << "Ingrese el codigo de marca: ";
         cin >> codmarca;
+        codmarca= validarCeroProducto(codmarca);
+        codmarca = validaCodMarcaIngresado(codmarca, Marca);
         Productos[i].codMarca=codmarca;
         }
         return true;
@@ -194,6 +202,7 @@ bool cargarLoteFP(FORMAPAGO FormaPago[], int tam) {
         for (int i = 0; i < tam; i++) {
         cout << "Ingrese el codigo de la forma de pago: " << endl;
         getline(cin, codpago);
+        codpago= repetidosFP(codpago, FormaPago, tam);
         while (!(codpago=="EF" || codpago=="MP" || codpago=="TR" || codpago=="TC" || codpago=="CT")) {
         cout << "Código inválido, ingreselo nuevamente: ";
         cin >> codpago;
@@ -211,13 +220,22 @@ bool cargarLoteFP(FORMAPAGO FormaPago[], int tam) {
         return true;
 }
 
-int validarCero(int codmarca)
+int validarCeroMarca(int codmarca)
 {
         while (codmarca==0){
         cout<<"El valor ingresado no es valido, intentelo nuevamente"<< endl;
         cin>>codmarca;
                         }
         return codmarca;
+}
+
+int validarCeroProducto(int valor)
+{
+        while (valor ==0){
+        cout<<"El valor ingresado no es valido, intentelo nuevamente"<< endl;
+        cin>>valor;
+                        }
+        return valor;
 }
 
 int validaCodMarca(int codmarca)
@@ -229,7 +247,6 @@ int validaCodMarca(int codmarca)
         return codmarca;
 }
 
-//validaString
 string validaString(string nombre)
 {
         cin.ignore();
@@ -241,24 +258,23 @@ string validaString(string nombre)
         return nombre;
 }
 
-//validaCodMarcaIngresado
-int validaCodMarcaIngresado(int cod, MARCA Marca[], int tamProd, int tamMarcas)
+int validaCodMarcaIngresado(int codmarca, MARCA Marca[])
 {
         int i = 0;
         while (true){
-        for (i = 0; i<tamMarcas; i++) {
-        if (cod==Marca[i].codMarca)
+        for (i = 0; i<10; i++) {
+        if (codmarca==Marca[i].codMarca)
             {
-        return cod;
+        return codmarca;
             }
                                         }
         cout << "Código de marca no encontrado en el lote de marcas. Ingreselo nuevamente: ";
-        cin >> cod;
+        cin >> codmarca;
                     }
 }
 
 //repetidosFP
-string repetidosFP(string FP, FORMAPAGO vFormaPago[], int tamFP)
+std::string repetidosFP(std::string FP, FORMAPAGO vFormaPago[], int tamFP)
 {
         while(true){
 
@@ -273,4 +289,5 @@ string repetidosFP(string FP, FORMAPAGO vFormaPago[], int tamFP)
         return FP;
                     }
 }
+
 
