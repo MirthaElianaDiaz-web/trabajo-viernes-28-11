@@ -1,7 +1,6 @@
 #include <iostream>
 #include"FUNCIONES.h"
-#include <string>
-#include<vector>
+
 using namespace std;
 
 struct MARCA Marca[10];
@@ -22,7 +21,6 @@ int mostrarmenu()
     cout<< "5_Mostrar reportes."<<endl;
     cout<< "0_Salir"<<endl;
     cin>> opcion;
-
     return opcion;
     }
 
@@ -78,8 +76,8 @@ void elegiropcion(int opcion, bool &salir)
     case 3:
         {system("cls");
         cout<<"Usted està en la carga de Formas de Pago"<<endl<<endl;
-        int tam=5;
-        cargarLoteFP (Formapago, tam);
+        int tamFP=5;
+        cargarLoteFP (Formapago, tamFP);
 
         for(int i = 0; i < 5; i++)
         {
@@ -93,38 +91,63 @@ void elegiropcion(int opcion, bool &salir)
         }
 
     case 4:
-        {
+    {  bool Autoriza;
+    Autoriza = Autorizaciones(Marca, Productos, Formapago);
+    if (Autoriza!=true)
+        {system("cls");
+    cout<<"Error: No esta autorizado"<<endl;
+    cout<<"Debe cargar los lotes de Marcas, Productos y Formas de Pago primero."<<endl<<endl;
+    system("pause");
+        break;}
+        else{
 
-        system("cls");
-          cout<<"Carga de Compras:"<<endl<<endl;
+        cout<<"Carga de Compras:"<<endl<<endl;
+        struct MARCA Marca[10];
+        struct PRODUCTOS Productos[20];
+        struct FORMAPAGO Formapago[5];
+        int nrocompra;
+        int codpro;
+        int cant;
+        int codcliente;
+        int dia;
+        std:: string fp;
+
+Lote_procesos(nrocompra,codpro,cant,codcliente,dia, fp);
+
+        }
     break;
         }
 
     case 5:
-       {
+    {
+            bool salirreporte = false;
+            int opcionreporte;
 
-         system("cls");
-          cout<<"Seleccione un informe:"<<endl<<endl;
-    break;
-       }
+            do {
+            opcionreporte = mostrarmenu();
+            elegirreporte(opcionreporte, salirreporte);
+            } while (salirreporte==true);
+
+            break;
+            }
 
    case 0:
-        {
+        {{
         system("cls");
           cout<<"Salir"<<endl<<endl;
 
-          salir=true;
+          salir=true;}
     break;
         }
 
     default:
     {     system("cls");
-          cout << "Por favor, vuelva a elegir" << endl << endl;
+          cout << "Por favor, vuelva a elegir" << endl << endl;}//cierra el default
 
     break;
-    }
+    }//CIERRA switch
 
-    }}
+    }//cierra la funcion completa
 
 void IniciarMenu()
     {
@@ -196,13 +219,13 @@ bool cargarLoteProd(PRODUCTOS Productos [], int tam)
         }
 
 
-bool cargarLoteFP(FORMAPAGO FormaPago[], int tam) {
+bool cargarLoteFP(FORMAPAGO FormaPago[], int tamFP) {
         int porcentajes;
         std::string nombrepago, codpago;
-        for (int i = 0; i < tam; i++) {
+        for (int i = 0; i < tamFP; i++) {
         cout << "Ingrese el codigo de la forma de pago: " << endl;
         getline(cin, codpago);
-        codpago= repetidosFP(codpago, FormaPago, tam);
+        codpago= repetidosFP(codpago, FormaPago, tamFP);
         while (!(codpago=="EF" || codpago=="MP" || codpago=="TR" || codpago=="TC" || codpago=="CT")) {
         cout << "Código inválido, ingreselo nuevamente: ";
         cin >> codpago;
@@ -273,7 +296,6 @@ int validaCodMarcaIngresado(int codmarca, MARCA Marca[])
                     }
 }
 
-//repetidosFP
 std::string repetidosFP(std::string FP, FORMAPAGO vFormaPago[], int tamFP)
 {
         while(true){
@@ -287,7 +309,239 @@ std::string repetidosFP(std::string FP, FORMAPAGO vFormaPago[], int tamFP)
         }
         //si no se repitió ningun codFP:
         return FP;
-                    }
+        }
 }
 
+
+int buscarindice(int codpro, PRODUCTOS Productos[], int tam) {
+    for (int i = 0; i < 20; i++) {
+        if (Productos[i].codProd == codpro) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int buscarIndiceFP(std::string codpago, FORMAPAGO FormaPago[], int tamFP)
+        {for (int i = 0; i < 5; i++)
+        {if (FormaPago[i].codPago == codpago)
+        {return i;}
+        }
+        return -1;}
+
+void Lote_procesos(int nrocompra,int codpro,int cant, int codcliente,int dia, std::string fp)
+    {
+    //datos
+    struct MARCA Marca[10];
+    struct PRODUCTOS Productos[20];
+    struct FORMAPAGO Formapago[5];
+    //variables de formulas
+    int tamp=20;
+    int tamf=5;
+    int pceEF=0;
+    float acuCantEF=0;
+    int pceMP=0;
+    float acuCantMP=0;
+    int pceTR=0;
+    float acuCantTR=0;
+    int pceTC=0;
+    float acuCantTC=0;
+    int pceCT=0;
+    float acuCantCT=0;
+    float acuCant=0;
+    int indice;
+    int fpindice;
+    float Mparcial;
+    float Mtotal;
+    float Montorecaudado[20];
+    int Ventaprodcant[20];
+    bool ContadorDeComprasRealizadas[20]={false};
+    int EFV[10]={};
+    int MPV[10]={};
+    int TRV[10]={};
+    int TCV[10]={};
+    int CTV[10]={};
+    int CodigoClientes[50]={};
+
+        cout << "Ingrese el numero de compras: ";
+        cin >>nrocompra;
+        cout << "Ingrese el codigo de producto: ";
+        cin >>codpro;
+        cout << "Ingrese la forma de pago: ";
+        cin >>fp;
+        cout<< "Ingrese la cantidad: ";
+        cin >>cant;
+        cout<< " Ingrese el codigo de Cliente: ";
+        cin>>codcliente;
+        cout<< "ingrese el dia: ";
+        cin>>dia;
+
+
+        while( nrocompra!=0)
+        {
+            // PROCESOS
+            indice = buscarindice(codpro,Productos,tamp);
+            fpindice = buscarIndiceFP(fp, Formapago, 5);
+
+            // RECAUDACION POR PRODUCTO
+            Mparcial = cant * Productos[indice].preVenta;
+            Ventaprodcant[indice] += cant;
+            Mtotal = Mparcial*((100 + Formapago[fpindice].porcentaje)/100);
+            Montorecaudado[indice] += Mtotal;
+            Productos[indice].stock-=cant;
+            //PRODUCTOS SIN VENTAS
+            while(nrocompra!=0)
+            {
+            ContadorDeComprasRealizadas[indice]=true;
+            }
+            //PORCENTAJE DE VENTAS POR FORMAS DE PAGO Y POR MARCA Y FORMA DE PAGO.
+            acuCant+=cant;
+                 if (fp == "EF") {acuCantEF += cant;
+                EFV[indice]+=cant;
+                 }
+            else if (fp == "MP") {acuCantMP += cant;
+                MPV[indice]+= cant;
+            }
+            else if (fp == "TR") {acuCantTR += cant;
+                TRV[indice]+=cant;
+            }
+            else if (fp == "TC") {acuCantTC += cant;
+                TCV[indice]+=cant;
+            }
+            else if (fp == "CT") {acuCantCT += cant;
+                CTV[indice]+=cant;
+            }
+            //TOP 10 CLIENTES
+            CodigoClientes[codcliente-1]+=cant;
+
+
+            cout << "Ingrese el nùmero de compras: ";
+            cin >>nrocompra;
+            cout << "Ingrese el codigo de producto: ";
+            cin >>codpro;
+            cout << "Ingrese la forma de pago: ";
+            cin >>fp;
+            cout<< "Ingrese la cantidad: ";
+            cin >>cant;
+            cout<< " Ingrese el codigo de Cliente: ";
+            cin>>codcliente;
+            cout<< "ingrese el dìa: ";
+            cin>>dia;
+        }//aca termina el while de carga de ventas.
+
+        Burbuja(Ventaprodcant, tamp);
+
+        pceEF=(acuCantEF*100)/acuCant;
+        pceMP=(acuCantMP*100)/acuCant;
+        pceTR=(acuCantTR*100)/acuCant;
+        pceTC=(acuCantTC*100)/acuCant;
+        pceCT=(acuCantCT*100)/acuCant;
+
+        //falta hacer el top 10 clientes
+    }
+
+void Burbuja(int Ventaprodcant[], int tamp){
+    int i,j, posmin, aux;
+    for(i=0;i<tamp-1;i++){
+        posmin=i;
+        for(j=i+1;j<tamp;j++){
+            if(Ventaprodcant[j]<Ventaprodcant[posmin]) posmin=j;
+        }
+        aux=Ventaprodcant[i];
+        Ventaprodcant[i]=Ventaprodcant[posmin];
+        Ventaprodcant[posmin]=aux;
+        aux=
+    }
+}
+
+bool Autorizaciones(MARCA Marca[], PRODUCTOS Productos[], FORMAPAGO Formapago[]) {
+    int a=0;
+    int b=0;
+    int c=0;
+    for (int i = 0; i < 10; i++) {
+        if (Marca[i].codMarca == 0) {
+            a=0;}
+            else {a=1;}
+    for (int i = 0; i < 20; i++)
+        if(Productos[i].codProd==0){
+            b=0;}
+            else{b=1;}
+    for (int i = 0; i < 5; i++)
+        if (Formapago[i].codPago==""){
+           c=0;}
+            else{c=1;}
+        }
+        if(a==1 && b==1 && c==1){
+                return true;} else {return false;}
+        }
+
+
+void IMenureportes()
+    {int opcionreporte;
+    bool salirreportes = false;
+    while (salirreportes!= true)
+    {opcionreporte = mostrarreportes();
+    elegirreporte(opcionreporte, salirreportes);}
+    }
+
+    int mostrarreportes()
+    {
+      int opcionreporte;
+      system("cls");
+
+    cout<< "ELEGIR UNA OPCION"<<endl<<endl;
+    cout<< "1_Recaudacion por producto."<<endl;
+    cout<< "2_Porcentaje de ventas por forma de pago."<<endl;
+    cout<< "3_Venta por marca y forma de pago."<<endl;
+    cout<< "4_Productos sin ventas."<<endl;
+    cout<< "5_Top 10 clientes + sorteo de cupones."<<endl;
+    cout<< "0_Salir"<<endl;
+    cin>> opcionreporte;
+
+    return opcionreporte;
+    }
+
+    void elegirreporte(int opcionreporte, bool &salirreportes)
+    {
+    switch(opcionreporte)
+    {
+    case 1:
+        {{cout<<"Recaudacion por producto:"<<endl<<endl<<endl;
+
+        }
+        break;
+     case 2:
+        {{cout<<"Porcentajes de venta por forma de pago:"<<endl<<endl<<endl;
+
+        }
+        break;
+     case 3:
+         {cout<<"Ventas por marca y forma de pago:"<<endl<<endl<<endl;
+
+        }
+        break;
+     case 4:
+         int i;
+         bool ContadorDeComprasRealizadas[20];
+        {cout<<"Productos sin ventas:"<<endl<<endl<<endl;
+        for (i=0; i>20; i++)
+        {if(ContadorDeComprasRealizadas[i]==false)
+        {cout<<"Producto: "<<Productos[i].nombreProd<<"----Codigo----"<<Productos[i].codProd<<endl;}}
+        break;}
+     case 5:
+        {{cout<<"Top 10 clientes + sorteo de cupones:"<<endl<<endl<<endl;
+
+
+        break;}
+     case 0:
+        {
+
+
+        break;}
+     default:
+        {
+
+
+        break;}
+    }}
 
