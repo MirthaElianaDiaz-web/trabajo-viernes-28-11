@@ -119,14 +119,14 @@ Lote_procesos(nrocompra,codpro,cant,codcliente,dia, fp);
         }
 
     case 5:
-    {
-            bool salirreporte = false;
-            int opcionreporte;
+   {
+    int Iopcionreporte;
+    bool Isalirreportes = false;
 
-            do {
-            opcionreporte = mostrarmenu();
-            elegirreporte(opcionreporte, salirreporte);
-            } while (salirreporte==true);
+    while (Isalirreportes!= true)
+    {Iopcionreporte= Imostrarmenu();
+    Ielegirreporte(Iopcionreporte, Isalirreportes);}
+
 
             break;
             }
@@ -337,7 +337,6 @@ void Lote_procesos(int nrocompra,int codpro,int cant, int codcliente,int dia, st
     struct FORMAPAGO Formapago[5];
     //variables de formulas
     int tamp=20;
-    int tamf=5;
     int pceEF=0;
     float acuCantEF=0;
     int pceMP=0;
@@ -351,10 +350,10 @@ void Lote_procesos(int nrocompra,int codpro,int cant, int codcliente,int dia, st
     float acuCant=0;
     int indice;
     int fpindice;
-    float Mparcial;
-    float Mtotal;
-    float Montorecaudado[20];
-    int Ventaprodcant[20];
+    float Mparcial=0;
+    float Mtotal=0;
+    float Montorecaudado[20]={};
+    int Ventaprodcant[20]={};
     bool ContadorDeComprasRealizadas[20]={false};
     int EFV[10]={};
     int MPV[10]={};
@@ -411,6 +410,8 @@ void Lote_procesos(int nrocompra,int codpro,int cant, int codcliente,int dia, st
             else if (fp == "CT") {acuCantCT += cant;
                 CTV[indice]+=cant;
             }
+            
+            
             //TOP 10 CLIENTES
             CodigoClientes[codcliente-1]+=cant;
 
@@ -440,19 +441,6 @@ void Lote_procesos(int nrocompra,int codpro,int cant, int codcliente,int dia, st
         //falta hacer el top 10 clientes
     }
 
-void Burbuja(int Ventaprodcant[], int tamp){
-    int i,j, posmin, aux;
-    for(i=0;i<tamp-1;i++){
-        posmin=i;
-        for(j=i+1;j<tamp;j++){
-            if(Ventaprodcant[j]<Ventaprodcant[posmin]) posmin=j;
-        }
-        aux=Ventaprodcant[i];
-        Ventaprodcant[i]=Ventaprodcant[posmin];
-        Ventaprodcant[posmin]=aux;
-        aux=
-    }
-}
 
 bool Autorizaciones(MARCA Marca[], PRODUCTOS Productos[], FORMAPAGO Formapago[]) {
     int a=0;
@@ -476,17 +464,9 @@ bool Autorizaciones(MARCA Marca[], PRODUCTOS Productos[], FORMAPAGO Formapago[])
         }
 
 
-void IMenureportes()
-    {int opcionreporte;
-    bool salirreportes = false;
-    while (salirreportes!= true)
-    {opcionreporte = mostrarreportes();
-    elegirreporte(opcionreporte, salirreportes);}
-    }
 
-    int mostrarreportes()
-    {
-      int opcionreporte;
+   int Imostrarmenu()
+   {int Iopcionreporte;
       system("cls");
 
     cout<< "ELEGIR UNA OPCION"<<endl<<endl;
@@ -496,52 +476,134 @@ void IMenureportes()
     cout<< "4_Productos sin ventas."<<endl;
     cout<< "5_Top 10 clientes + sorteo de cupones."<<endl;
     cout<< "0_Salir"<<endl;
-    cin>> opcionreporte;
+    cin>> Iopcionreporte;
 
-    return opcionreporte;
+    return Iopcionreporte;
     }
 
-    void elegirreporte(int opcionreporte, bool &salirreportes)
+int Ielegirreporte(int Iopcionreporte, bool &Isalirreportes)
     {
-    switch(opcionreporte)
+    switch(Iopcionreporte)
     {
     case 1:
-        {{cout<<"Recaudacion por producto:"<<endl<<endl<<endl;
+    {system("cls");
+    PRODUCTOS Productos[20];
+    float Montorecaudado[20];
+    int Ventaprodcant[20];
+    int burbindice[20];
 
-        }
-        break;
+      cout <<"Recaudacion por producto"<< endl<<endl<<endl;
+
+    for (int i = 0; i < 20; i++) {
+
+          cout << "Producto: "<<Productos[burbindice[i]].nombreProd<<endl;
+          cout << "Codigo: " <<Productos[burbindice[i]].codProd<<endl;
+          cout << "Recaudacion total: $" <<Montorecaudado[burbindice[i]]<<endl;
+          cout << "Cantidad vendida: " <<Ventaprodcant[burbindice[i]]<<endl;
+          cout << "Stock remanente: "<<Productos[burbindice[i]].stock<<endl;
+            system("pause");}
+
+         Ielegirreporte(Iopcionreporte,Isalirreportes);
+
+        break;}
      case 2:
-        {{cout<<"Porcentajes de venta por forma de pago:"<<endl<<endl<<endl;
+         {system("cls");
+         int pceEF, pceMP, pceTR, pceTC, pceCT;
+         cout<<"Porcentajes de venta por forma de pago:"<<endl<<endl<<endl;
+         cout<<"El porcentaje de ventas en Efectivo es: "<<pceEF<<endl;
+         cout<<"El porcentaje de ventas en MercadoPago es: "<<pceMP<<endl;
+         cout<<"El porcentaje de ventas en Transferencia es: "<<pceTR<<endl;
+         cout<<"El porcentaje de ventas en Tarjeta de Credito es: "<<pceTC<<endl;
+         cout<<"El porcentaje de ventas en Criptomoneda es: "<<pceCT<<endl;
+         system("pause");
 
-        }
-        break;
+         Ielegirreporte(Iopcionreporte,Isalirreportes);
+
+        break;}
+
      case 3:
-         {cout<<"Ventas por marca y forma de pago:"<<endl<<endl<<endl;
+         {system("cls");
+         cout<<"Ventas por marca y forma de pago:"<<endl<<endl<<endl;
 
-        }
-        break;
+            for (i=0;i<5;i++)
+                {cout<<"Medio de pago: "<<FormaPago[i].nombrefp<<endl;
+                
+                cout<<"Marca: " Marca[].nombre<<endl;
+                cout<<"Cantidad: "
+            
+
+
+
+
+         system("pause");
+         return Ielegirreporte(Iopcionreporte,Isalirreportes);
+        break;}
      case 4:
-         int i;
-         bool ContadorDeComprasRealizadas[20];
-        {cout<<"Productos sin ventas:"<<endl<<endl<<endl;
+        {system("cls");
+        int i;
+        bool ContadorDeComprasRealizadas[20];
+
+        cout<<"Productos sin ventas:"<<endl<<endl<<endl;
         for (i=0; i>20; i++)
         {if(ContadorDeComprasRealizadas[i]==false)
         {cout<<"Producto: "<<Productos[i].nombreProd<<"----Codigo----"<<Productos[i].codProd<<endl;}}
+         system("pause");
+
+         Ielegirreporte(Iopcionreporte,Isalirreportes);
         break;}
      case 5:
-        {{cout<<"Top 10 clientes + sorteo de cupones:"<<endl<<endl<<endl;
+        {cout<<"Top 10 clientes + sorteo de cupones:"<<endl<<endl<<endl;
 
+         system("pause");
 
+         Ielegirreporte(Iopcionreporte,Isalirreportes);
         break;}
+
      case 0:
-        {
-
-
-        break;}
-     default:
-        {
-
-
+        {system("cls");
+        cout<<"Salir"<<endl;
+       if (Isalirreportes=true){Ielegirreporte(Iopcionreporte,Isalirreportes);}
         break;}
     }}
 
+
+void mostrarRecaudacion(PRODUCTOS Productos[20], int tamp, int Ventaprodcant[20], float Montorecaudado[20])
+{
+
+}
+
+void Burbuja(int Ventaprodcant[], int tamp)
+{   int i,j, posmin, aux;
+    int burbindice[20];
+    for(i=0;i<20;i++){burbindice[i]=i;}
+    for(i=0;i<tamp-1;i++){
+        posmin=i;
+        for(j=i+1;j<tamp;j++){
+            if(Ventaprodcant[j]<Ventaprodcant[posmin])
+            {posmin=j;
+        aux=Ventaprodcant[i];
+        Ventaprodcant[i]=Ventaprodcant[posmin];
+        Ventaprodcant[posmin]=aux;
+        aux=burbindice[i+1];
+        burbindice[i+1]=burbindice[i];
+        burbindice[i]=aux;}}}}
+
+        // burbuja de mayor a menor usando una variable auxiliar
+void burbuja(int nroCliente[], int clientes[]) {
+    int auxCliente, auxCompras;
+
+    for (int i = 0; i < 50 - 1; i++) {
+        for (int j = 0; j < 50 - i - 1; j++) {
+            if (clientes[j] < clientes[j + 1]) {
+                auxCompras = clientes[j];
+                clientes[j] = clientes[j + 1];
+                clientes[j + 1] = auxCompras;
+
+                // Intercambio de los números de cliente
+                auxCliente = nroCliente[j];
+                nroCliente[j] = nroCliente[j + 1];
+                nroCliente[j + 1] = auxCliente;
+            }
+        }
+    }
+}
