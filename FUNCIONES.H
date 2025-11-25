@@ -7,9 +7,10 @@ void IniciarMenu();
 int mostrarmenu ();
 void elegiropcion(int opcion, bool &salir);
 
-
-int mostrarreportes();
-void elegirreporte(int opcion, bool &salirreportes);
+void IMenureportes();
+int Imostrarreportes();
+int Imostrarmenu();
+int Ielegirreporte(int Iopcionreporte, bool &Isalirreportes);
 
 struct MARCA
 {
@@ -48,6 +49,7 @@ int validaCodMarca(int codmarca);
 int validaCodMarcaIngresado(int codmarca, MARCA Marca[]);
 std:: string validaString(std:: string nombre);
 //FUNCIONES
+void mostrarRecaudacion(PRODUCTOS Productos[], int tamp, float Ventaprodcant[], int Montorecaudado[]);
 bool Autorizaciones(MARCA Marca[], PRODUCTOS Productos[], FORMAPAGO Formapago[]);
 void Burbuja(int Ventaprodcant[], int tamp);
 int buscarindice(int codpro, PRODUCTOS Productos[], int tam);
