@@ -35,6 +35,13 @@ std::string nombreFP;
 int porcentaje;
 };
 
+struct clientes
+{
+    int cod;
+    int cantcompra;
+    float acumulado;
+};
+
 //carga de lotes
 bool cargarLoteMarca(MARCA Marca[], int tam);
 bool cargarLoteProd(PRODUCTOS Productos[], int tam);
@@ -49,6 +56,7 @@ int validaCodMarca(int codmarca);
 int validaCodMarcaIngresado(int codmarca, MARCA Marca[]);
 std:: string validaString(std:: string nombre);
 //FUNCIONES
+void burbujaclientes(int nroCliente[], float acuClientes[]);
 void mostrarRecaudacion(PRODUCTOS Productos[], int tamp, float Ventaprodcant[], int Montorecaudado[]);
 bool Autorizaciones(MARCA Marca[], PRODUCTOS Productos[], FORMAPAGO Formapago[]);
 void Burbuja(int Ventaprodcant[], int tamp);
