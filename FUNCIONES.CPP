@@ -192,11 +192,11 @@ void IniciarMenu()
 
    //FUNCIONES INDIVIDUALES DESDE ACA//
 
-bool cargarLoteMarca(MARCA Marca[], int tamaño=10)
+bool cargarLoteMarca(MARCA Marca[], int tam=10)
        {
         int aux, i, codmarca;
         std:: string nombre;
-        for (i = 0; i < tamaño; i++)
+        for (i = 0; i < tam; i++)
         {
         cout << "Ingrese el codigo de la marca: ";
 
@@ -567,22 +567,24 @@ int Ielegirreporte(int Iopcionreporte, bool &Isalirreportes)
         int tam=10;
         cout<<"Top 10 clientes + sorteo de cupones:"<<endl<<endl<<endl;
         for (i=0;i<10;i++){
-        cout<<"cliente nro: "<<maximos[i];
+        cout<<"cliente nro: "<<maximos[i]<<endl<<endl;
         }system("pause");
         cargarAleatorio(maximos, acuClientes, 10);
-        cout<<"Ganadores de cupones:";
-        cout<<"ganador 1, 2 y 3"<<endl;
+        repetidosFP(acuCliente, msximos[], 3);
+        cout<<"Ganadores de cupones:"<<endl;
+
 
 
         srand(time(0));
+       
 
-        for (int i = 0; i < 5; i++) {
-        int numero = rand() % 100 + 1; // Número aleatorio entre 1 y 100
+        for (int i = 0; i < 3; i++) {
+        int numero = rand() % 10 + 1;
+         
+        cout<<"ganador: "<<endl;
         cout << numero << endl;
-
-
-
         system("pause");}
+        
         break;}
 
         case 0:
