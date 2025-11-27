@@ -1,4 +1,3 @@
-
 #ifndef FUNCIONES_H_INCLUDED
 #define FUNCIONES_H_INCLUDED
 
@@ -12,6 +11,7 @@ void IMenureportes();
 int Imostrarreportes();
 int Imostrarmenu();
 int Ielegirreporte(int Iopcionreporte, bool &Isalirreportes);
+
 
 struct MARCA
 {
@@ -66,3 +66,4 @@ int buscarindice(int codpro, PRODUCTOS Productos[], int tam);
 int buscarIndiceFP(std::string codpago, FORMAPAGO FormaPago[], int tamFP);
 void Lote_procesos(int nrocompra, int codpro,int cant,int codcliente,int dia, std::string fp);
 #endif // FUNCIONES_H_INCLUDED
+
