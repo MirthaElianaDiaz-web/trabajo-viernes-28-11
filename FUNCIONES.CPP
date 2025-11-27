@@ -171,6 +171,7 @@ bool cargarLoteMarca(MARCA Marca[], int tam)
         for (i = 0; i < 10; i++)
         {
         cout << "Ingrese el codigo de la marca: ";
+        cin.ignore(100, '\n');
         cin >> codmarca;
         codmarca = validarCeroMarca(codmarca);
         codmarca = validaCodMarca(codmarca);
@@ -221,15 +222,16 @@ bool cargarLoteProd(PRODUCTOS Productos [], int tam)
         }
 
 
-bool cargarLoteFP(FORMAPAGO FormaPago[], int tamFP) {
-        int porcentajes;
+bool cargarLoteFP(FORMAPAGO FormaPago[], int tamFP)
+{       int porcentajes;
         std::string nombrepago, codpago;
         for (int i = 0; i < tamFP; i++) {
         cout << "Ingrese el codigo de la forma de pago: " << endl;
+        cin.ignore(100, '\n');
         getline(cin, codpago);
         codpago= repetidosFP(codpago, FormaPago, tamFP);
         while (!(codpago=="EF" || codpago=="MP" || codpago=="TR" || codpago=="TC" || codpago=="CT")) {
-        cout << "Código inválido, ingreselo nuevamente: ";
+        cout << "Codigo invalido, ingreselo nuevamente: ";
         cin >> codpago;
         cin.ignore(100, '\n');
         }
@@ -499,7 +501,7 @@ bool Autorizaciones(MARCA Marca[], PRODUCTOS Productos[], FORMAPAGO Formapago[])
     }
 
 int Ielegirreporte(int Iopcionreporte, bool &Isalirreportes)
-    { PRODUCTOS Productos[20];
+    {PRODUCTOS Productos[20];
     float Montorecaudado[20];
     int Ventaprodcant[20];
     int burbindice[20];
@@ -596,16 +598,20 @@ int Ielegirreporte(int Iopcionreporte, bool &Isalirreportes)
          Ielegirreporte(Iopcionreporte,Isalirreportes);
         break;}
      case 5:
-        {cout<<"Top 10 clientes + sorteo de cupones:"<<endl<<endl<<endl;
+        {int maximos[10];
+        int acuClientes[10];
+        int tam=10;
+            cout<<"Top 10 clientes + sorteo de cupones:"<<endl<<endl<<endl;
         for (i=0;i<10;i++){
-         cout<<"cliente nro: "<<maximos[i];   
+         cout<<"cliente nro: "<<maximos[i];
         }system("pause");
-        cout<<"Ganadores de cupones:"
-        cout<<...............
-        
-        
+        cargarAleatorio(maximos, acuClientes, 10);
+        cout<<"Ganadores de cupones:";
+        cout<<"ganador 1, 2 y 3"<<endl;
+
+
         srand(time(0));
-        
+
         for (int i = 0; i < 5; i++) {
         int numero = rand() % 100 + 1; // Número aleatorio entre 1 y 100
         cout << numero << endl;
@@ -614,7 +620,7 @@ int Ielegirreporte(int Iopcionreporte, bool &Isalirreportes)
 
          system("pause");
 
-         Ielegirreporte(Iopcionreporte,Isalirreportes);
+         Ielegirreporte(Iopcionreporte,Isalirreportes);}
         break;}
 
      case 0:
@@ -657,4 +663,11 @@ void burbujaclientes (int nroCliente[], float acuClientes[])
                 nroCliente[j] = nroCliente[j + 1];
                 nroCliente[j + 1] = auxCliente;}}}}
 
+
+void cargarAleatorio(int maximos[], int acuClientes[], int tam)
+{// Mostrar 3 números aleatorios del arreglo max10
+    for (int i = 0; i < 3; i++)
+    {int indice = rand() %10 ;  // Generar un índice aleatorio entre 0 y tam-1
+    cout << "Ganador/a del cupon de descuento " << i + 1 << ": Cliente " << maximos[indice] << " - Compras: " << acuClientes[indice] << endl;
+    }}
 
