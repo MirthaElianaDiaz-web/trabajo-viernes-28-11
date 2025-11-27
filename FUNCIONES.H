@@ -1,3 +1,4 @@
+
 #ifndef FUNCIONES_H_INCLUDED
 #define FUNCIONES_H_INCLUDED
 
@@ -56,6 +57,7 @@ int validaCodMarca(int codmarca);
 int validaCodMarcaIngresado(int codmarca, MARCA Marca[]);
 std:: string validaString(std:: string nombre);
 //FUNCIONES
+void cargarAleatorio(int maximos[], int maxClientes[], int tam);
 void burbujaclientes(int nroCliente[], float acuClientes[]);
 void mostrarRecaudacion(PRODUCTOS Productos[], int tamp, float Ventaprodcant[], int Montorecaudado[]);
 bool Autorizaciones(MARCA Marca[], PRODUCTOS Productos[], FORMAPAGO Formapago[]);
